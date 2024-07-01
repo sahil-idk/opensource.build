@@ -37,7 +37,7 @@ const IssueList = async ({
       },
     }
   ).then((response) => response.json());
-  console.log(issueData[0].html_url, "issueData");
+//   console.log(issueData[0].html_url, "issueData");
 
   return (
     <TabsContent value="issues">
