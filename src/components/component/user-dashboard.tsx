@@ -2,7 +2,7 @@
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import Link from "next/link"
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from "@/components/ui/breadcrumb"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
@@ -239,9 +239,10 @@ console.log(issuesTodo)
             <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
               <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
                 <CardHeader className="pb-3">
-                  <CardTitle>Your Contributions</CardTitle>
-                  <CardDescription className="max-w-lg text-balance leading-relaxed">
-                    Explore your open source contributions and impact.
+                  <CardTitle>Your Organizations</CardTitle>
+                  <CardDescription className="max-w-lg text-balance flex flex-col gap-6  leading-relaxed">
+                   Explore your open source contributions and impact. 
+                   <Link href={'/orgs'} className={buttonVariants()}>View Organizations</Link>
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

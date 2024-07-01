@@ -4,7 +4,7 @@ import "../globals.css";
 import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
+import { ThemeProvider } from "@/components/component/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -24,19 +24,20 @@ export default async function RootLayout({
 
   return (
     <ClerkProvider>
+    
     <html lang="en">
       <body>
-        <header>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
-        </header>
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+       
         <main>
           {children}
         </main>
+        </ThemeProvider>
       </body>
     </html>
   </ClerkProvider>
