@@ -66,7 +66,7 @@ const OrgsPage = async (props: Props) => {
      <Suspense fallback={<div>Loading...</div>}>
         <OrgList/>
       </Suspense> */}
-      <OrgList OrgListItem={OrgListItem} username={user?.fullName}/>
+      <OrgList OrgListItem={OrgListItem} username={user?.fullName!}/>
       </div>
   )
 }

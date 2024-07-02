@@ -31,18 +31,17 @@ import Link from "next/link"
 import { Card } from "@/components/ui/card"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import { Suspense } from "react"
+import { JSX, SVGProps, Suspense } from "react"
 import { User } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
-
+interface OrgListProps {
+  OrgListItem: React.FC;
+  username: string | undefined;
+}
 export function OrgList({
   OrgListItem,
   username
-}:{
-  OrgListItem: React.ReactNode
-  username: string
-
-}) {
+}:OrgListProps) {
   return (
     <div className="flex flex-col w-full min-h-screen bg-muted/40 p-5">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
@@ -242,7 +241,7 @@ export function OrgList({
   )
 }
 
-function SearchIcon(props) {
+function SearchIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
