@@ -6,6 +6,18 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "../ui/input";
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Form,
   FormControl,
@@ -15,8 +27,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "../ui/button";
-import { useFormStatus } from "react-dom";
+
+import { DialogClose } from "@radix-ui/react-dialog";
 type Props = {};
 
 
@@ -27,14 +39,18 @@ interface OrganizationDetails {
     followers: number;
     html_url: string;
   }
+
+
+
 const CreateOrgForm = (props: Props) => {
 
 
-const status = useFormStatus()
+
     const [query, setQuery] = useState('');
      const [results, setResults] =  useState<OrganizationDetails | null>(null);
      const [error, setError] = useState('');
      const [loading, setLoading] = useState(false);
+     const [isOpen, setIsOpen] = useState(false); 
 
      useEffect(() => {
       const fetchData = async () => {
@@ -89,21 +105,40 @@ const status = useFormStatus()
             content: ''
         },
     })
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        setLoading(true)
+        await addOrg(values);
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
-        console.log(values)
+        // console.log(values)
+        setLoading(false)
+        setIsOpen(false);
+        form.reset();
       }
   return ( 
     <> 
+   
+     <Dialog  open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button >Add Organization</Button>
+      </DialogTrigger>
+    
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Create a new organisation</DialogTitle>
+          <DialogDescription>
+            Add organization details to get started
+          </DialogDescription>
+        </DialogHeader>
+        <ScrollArea className=" h-80 w-full  p-2 rounded-md border">   
     <Form {...form}>
-    <form action={addOrg} className="space-y-8">
+    <form  onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <FormField
         control={form.control}
         name="title"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>title</FormLabel>
+            <FormLabel>Org title</FormLabel>
             <FormControl>
               <Input id="title" placeholder="shadcn" {...field} />
             </FormControl>
@@ -119,7 +154,7 @@ const status = useFormStatus()
         name="link"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Github repositry name</FormLabel>
+            <FormLabel>Github Org Name</FormLabel>
             <FormControl>
               <Input 
               {...field} 
@@ -139,7 +174,7 @@ const status = useFormStatus()
           
         )}
       />
-      <Button type="submit">{
+      <Button variant={"ghost"}>{
             !results ? 'Invalid' : 'Valid Organisation'
           }</Button>
       <FormField
@@ -158,9 +193,14 @@ const status = useFormStatus()
           </FormItem>
         )}
       />
-      <Button disabled={!results} type="submit">Submit</Button>
+  
+          {!loading ? <Button disabled={!results} type="submit">Add Organisation</Button> : <Button  disabled type="submit">Creating organisation</Button>}
+         
+      
+    
     </form>
   </Form>
+ 
 
   <div className="mt-4 w-full">
         {loading && <p>Loading...</p>}
@@ -176,6 +216,11 @@ const status = useFormStatus()
           </div>
         )}
       </div>
+      </ScrollArea>
+      </DialogContent>
+      
+      </Dialog>
+  
       </>
 
 

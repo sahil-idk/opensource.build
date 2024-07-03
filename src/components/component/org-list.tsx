@@ -34,6 +34,7 @@ import { Badge } from "@/components/ui/badge"
 import { JSX, SVGProps, Suspense } from "react"
 import { User } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
+import { CreateOrganisation } from "../forms/CreateOrgModal"
 interface OrgListProps {
   OrgListItem: React.FC;
   username: string | undefined;
@@ -105,7 +106,8 @@ export function OrgList({
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold">Your Organizations</h2>
             <div className="flex gap-2">
-              <Link href={'/orgs/create'} className={buttonVariants()}>Create New Org</Link>
+              <CreateOrganisation/>
+              
               <Link href={'/'} className={buttonVariants({ variant: "outline" })} >Visit Dashboard</Link>
             </div>
           </div>

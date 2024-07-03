@@ -3,14 +3,14 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { orgsTable } from "@/db/schema";
 import { auth, currentUser } from "@clerk/nextjs/server";
-export const addOrg = async (formData:any) => {
+import { revalidatePath } from "next/cache";
+export const addOrg = async ({ title, content, link }: { title: string, content: string, link: string }) => {
+  console.log({ title, content, link })
   const { userId } = auth();
   if (!userId) {
-    throw new Error('You must be signed in to add an item to your cart');
+    throw new Error('You must be signed in to add an item to your orgs ');
   }
-    const title = formData.get('title');
-    const content = formData.get('content');
-    const link = formData.get('link').replace(/\s+/g, '');
+    
     const Post = {
       title,
       content,
@@ -20,5 +20,6 @@ export const addOrg = async (formData:any) => {
     console.log(Post)
     await db.insert(orgsTable).values(Post);
     console.log('post inserted successfully.');
-    redirect('/orgs')
+    // redirect('/orgs')
+    revalidatePath('/orgs')
   }
