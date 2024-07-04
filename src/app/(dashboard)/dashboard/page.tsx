@@ -13,11 +13,9 @@ const UserPage = async  ({params}: {
  
 }) => {
     const user = await currentUser();
-    console.log(user)
-    if(params.user !== user?.fullName){
-    return <div>This workspace does not exist</div>
-    }
-
+   
+ 
+      
   return (
 
         <Suspense fallback={<div>Loading...</div>}>
