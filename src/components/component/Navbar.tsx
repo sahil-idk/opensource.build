@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { JSX, SVGProps } from "react"
 import { ModeToggle } from "@/components/component/ModeToggle"
 import { cn } from '@/lib/utils';
+import { GithubIcon } from '../icons/Icons';
+import { HoverBorderGradient } from '../ui/hover-border-gradient';
 
 
 export default function Navbar() {
@@ -22,8 +24,18 @@ export default function Navbar() {
     
       <div className="ml-auto flex gap-6 items-center">
         {/* <HeaderActions/> */}
-        <ModeToggle/>
-
+        
+      <Link href={'https://github.com/sahil-idk/opensource.build'}>
+      <HoverBorderGradient
+        containerClassName="rounded-full"
+        as="button"
+        
+        className="dark:bg-black bg-white text-black dark:text-white flex items-center gap-5"
+      >
+        Contribute <GithubIcon/>
+      </HoverBorderGradient>
+      </Link>
+   
       </div>
     </header>
   )

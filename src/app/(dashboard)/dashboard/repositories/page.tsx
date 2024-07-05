@@ -11,7 +11,9 @@ const UserRepositories =   (props: Props) => {
     <div className="mb-6">
       <h2 className="text-2xl font-bold">Your GitHub Repositories</h2>
     </div>
+    <Suspense fallback={<div>Loading...</div>}>
       <UserRepos  />
+    </Suspense>
     </section>
      
     

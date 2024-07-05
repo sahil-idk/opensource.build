@@ -31,7 +31,7 @@ export default function Home() {
           >
             <span>
               why should competitive programmers have all the fun? building
-              opensource.build 🚀
+              <Link href={'https://github.com/sahil-idk/opensource.build'}>opensource.build 🚀</Link>
             </span>
           </HoverBorderGradient>
 
@@ -172,9 +172,13 @@ export default function Home() {
             </div>
           </div>
         </section>
-      
+        <div className="flex items-center text-center mx-auto w-full max-w-2xl my-10">
+          <h1 className="mx-auto">Build with ❤️ by <Link className="hover:text-orange-500" href={'https://x.com/sahildkun'}>Sahil</Link></h1>
+
+</div>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-muted-foreground">&copy; 2024 CodeRank.build. All rights reserved.</p>
+
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link href="#" className="text-xs hover:underline underline-offset-4" prefetch={false}>
             Privacy Policy
