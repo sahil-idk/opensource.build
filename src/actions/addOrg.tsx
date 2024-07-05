@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export const addOrg = async ({ title, content, link }: { title: string, content: string, link: string }) => {
   console.log({ title, content, link })
   const { userId } = auth();
-  if (!userId) {
+  if (!userId) {  
     throw new Error('You must be signed in to add an item to your orgs ');
   }
     

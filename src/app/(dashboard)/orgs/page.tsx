@@ -24,9 +24,10 @@ const OrgListItem = async () => {
                 
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">OrgName</TableHead>
+                        <TableHead>OrgName</TableHead>
                         <TableHead>Org Github</TableHead>
                         <TableHead>Org description</TableHead>
+                        <TableHead>Edit</TableHead>
                         {/* <TableHead className="text-right">Amount</TableHead> */}
                     </TableRow>
                 </TableHeader>
