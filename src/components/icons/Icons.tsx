@@ -1,7 +1,8 @@
-import { JSX,  SVGProps } from "react";
+import { JSX, SVGProps } from "react";
 
-
-export function DoorOpenIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+export function DoorOpenIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -21,11 +22,12 @@ export function DoorOpenIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGEle
       <path d="M10 12v.01" />
       <path d="M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z" />
     </svg>
-  )
+  );
 }
 
-
-export function GitBranchIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+export function GitBranchIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -44,14 +46,8 @@ export function GitBranchIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGEl
       <circle cx="6" cy="18" r="3" />
       <path d="M18 9a9 9 0 0 1-9 9" />
     </svg>
-  )
+  );
 }
-
-
-
-
-
-
 
 export function GithubIcon(
   props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>

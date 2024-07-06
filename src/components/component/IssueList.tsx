@@ -20,7 +20,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
 import { addToWorkspace } from "@/actions/addToWorkspace";
 import Image from "next/image";
-type Props = {};
 
 const IssueList = async ({
   orgName,
@@ -37,7 +36,6 @@ const IssueList = async ({
       },
     }
   ).then((response) => response.json());
-//   console.log(issueData[0].html_url, "issueData");
 
   return (
     <TabsContent value="issues">
@@ -64,7 +62,6 @@ const IssueList = async ({
                 issueData.map(
                   (issue: {
                     id: number;
-
                     state: string;
                     number: number;
                     title: string;
@@ -134,12 +131,11 @@ const IssueList = async ({
                               name="state"
                               value={issue.state}
                             />
-                             <input
+                            <input
                               type="hidden"
                               name="issueLink"
                               value={issue.html_url}
                             />
-                         
                             <Button type="submit">Add to workspace</Button>
                           </form>
                         </TableCell>

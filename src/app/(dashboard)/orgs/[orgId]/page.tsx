@@ -1,34 +1,31 @@
-import React, { Suspense } from 'react'
-import { useRouter } from 'next/router'
-import { OrgDashboard } from '@/components/component/org-dashboard'
-import { orgsTable } from '@/db/schema'
-import { db } from '@/db'
-import { eq } from 'drizzle-orm'
-
-type Props = {}
+import React, { Suspense } from "react";
+import { OrgDashboard } from "@/components/component/org-dashboard";
+import { orgsTable } from "@/db/schema";
+import { db } from "@/db";
+import { eq } from "drizzle-orm";
 
 const OrgPage = async ({
-    params
+  params,
 }: {
-    params: {
-        orgId: string
-    }
+  params: {
+    orgId: string;
+  };
 }) => {
-    const orgId = Number(params.orgId);
-    const orgDetails = await db.select().from(orgsTable).where(eq(orgsTable.id, orgId));
-    console.log(orgDetails)
+  const orgId = Number(params.orgId);
+  const orgDetails = await db
+    .select()
+    .from(orgsTable)
+    .where(eq(orgsTable.id, orgId));
+
   return (
-    
-        <Suspense fallback={<div>Loading...</div>}>
-        <OrgDashboard
+    <Suspense fallback={<div>Loading...</div>}>
+      <OrgDashboard
         orgName={orgDetails[0].title}
         orgGithub={orgDetails[0].link}
         orgDescription={orgDetails[0].content}
+      />
+    </Suspense>
+  );
+};
 
-        />
-        </Suspense>
-    
-  )
-}
-
-export default OrgPage
+export default OrgPage;

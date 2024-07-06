@@ -1,25 +1,36 @@
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from "@/components/ui/tooltip";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import IssueList from "./IssueList";
+import { JSX, SVGProps, Suspense } from "react";
 
-import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
-import Link from "next/link"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
-import { Badge } from "@/components/ui/badge"
-import IssueList from "./IssueList"
-import { JSX, SVGProps, Suspense } from "react"
+type RepoDashboardProps = {
+  orgName: string;
+  repoName: string;
+};
 
-export function RepoDashboard(
-  {
-    orgName,
-    repoName
-  } :{
-    orgName: string,
-    repoName: string
-  }
-) {
+export function RepoDashboard({ orgName, repoName }: RepoDashboardProps) {
   return (
     <div className="flex min-h-screen w-full bg-muted/40">
       <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-background sm:flex">
@@ -65,12 +76,18 @@ export function RepoDashboard(
       <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14 w-full">
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
           <div className="flex-1">
-            <h1 className="text-lg font-semibold">{orgName}/{repoName}</h1>
+            <h1 className="text-lg font-semibold">
+              {orgName}/{repoName}
+            </h1>
             <p className="text-sm text-muted-foreground">{orgName}</p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="icon" className="overflow-hidden rounded-full">
+              <Button
+                variant="outline"
+                size="icon"
+                className="overflow-hidden rounded-full"
+              >
                 <MoveHorizontalIcon className="w-4 h-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -93,7 +110,8 @@ export function RepoDashboard(
                 <CardHeader>
                   <CardTitle>Repository Details</CardTitle>
                   <CardDescription>
-                    Beautifully designed components that you can copy and paste into your apps.
+                    Beautifully designed components that you can copy and paste
+                    into your apps.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -110,7 +128,10 @@ export function RepoDashboard(
                     </div>
                     <div>
                       <Label>Description</Label>
-                      <p>Beautifully designed components that you can copy and paste into your apps.</p>
+                      <p>
+                        Beautifully designed components that you can copy and
+                        paste into your apps.
+                      </p>
                     </div>
                     <div className="grid sm:grid-cols-[1fr_1fr] gap-4">
                       <div>
@@ -137,7 +158,7 @@ export function RepoDashboard(
               </Card>
             </TabsContent>
             <Suspense fallback={<div>Loading...</div>}>
-            <IssueList orgName={orgName} repoName={repoName}/>
+              <IssueList orgName={orgName} repoName={repoName} />
             </Suspense>
             {/* <TabsContent value="issues">
               <Card className="w-full">
@@ -233,10 +254,12 @@ export function RepoDashboard(
         </main>
       </div>
     </div>
-  )
+  );
 }
 
-function MoveHorizontalIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
+function MoveHorizontalIcon(
+  props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -254,5 +277,5 @@ function MoveHorizontalIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElem
       <polyline points="6 8 2 12 6 16" />
       <line x1="2" x2="22" y1="12" y2="12" />
     </svg>
-  )
+  );
 }
