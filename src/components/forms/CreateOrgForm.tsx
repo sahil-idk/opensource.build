@@ -16,7 +16,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Form,
@@ -27,6 +26,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { GITHUB_API_BASE_URL } from "@/lib/env";
+
 interface OrganizationDetails {
   name: string;
   description: string;
@@ -55,7 +56,7 @@ const CreateOrgForm = () => {
       setError("");
       try {
         const response = await fetch(
-          `https://api.github.com/orgs/${sanitizedQuery}`,
+          `${GITHUB_API_BASE_URL}/orgs/${sanitizedQuery}`,
           {
             headers: {
               Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,

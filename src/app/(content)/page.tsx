@@ -4,6 +4,7 @@ import Navbar from "@/components/component/Navbar";
 import { HoverBorderGradient } from "@/components/component/hover-gradient-border";
 import { Spotlight } from "@/components/component/Spotlight";
 import { Input } from "@/components/ui/input";
+import { GITHUB_BASE_URL, TYPEFORM_URL, X_PROFILE_URL } from "@/lib/env";
 
 export default function Home() {
   return (
@@ -25,7 +26,7 @@ export default function Home() {
             >
               <span>
                 why should competitive programmers have all the fun? building
-                <Link href={"https://github.com/sahil-idk/opensource.build"}>
+                <Link href={`${GITHUB_BASE_URL}sahil-idk/opensource.build`}>
                   opensource.build 🚀
                 </Link>
               </span>
@@ -49,7 +50,7 @@ export default function Home() {
                 Join Now
               </Link>
               <Link
-                href="https://en5oef7os9p.typeform.com/to/PW1xvUek"
+                href={TYPEFORM_URL}
                 className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 prefetch={false}
               >
@@ -186,11 +187,8 @@ export default function Home() {
         </section>
         <div className="flex items-center text-center mx-auto w-full max-w-2xl my-10">
           <h1 className="mx-auto">
-            Build with ❤️ by{" "}
-            <Link
-              className="hover:text-orange-500"
-              href={"https://x.com/sahildkun"}
-            >
+            Build with ❤️ by&nbsp;
+            <Link className="hover:text-orange-500" href={X_PROFILE_URL}>
               Sahil
             </Link>
           </h1>

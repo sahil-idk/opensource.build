@@ -10,23 +10,18 @@ import {
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-
 import Link from "next/link";
 import Image from "next/image";
 import ReposList from "./reposList";
+import { GITHUB_API_BASE_URL, GITHUB_BASE_URL } from "@/lib/env";
 
 type OrgDashboardProps = {
   orgName: string;
   orgGithub: string;
-  orgDescription: string;
 };
 
-export async function OrgDashboard({
-  orgName,
-  orgGithub,
-  orgDescription,
-}: OrgDashboardProps) {
-  const orgInfo = await fetch(`https://api.github.com/orgs/${orgGithub}`, {
+export async function OrgDashboard({ orgName, orgGithub }: OrgDashboardProps) {
+  const orgInfo = await fetch(`${GITHUB_API_BASE_URL}orgs/${orgGithub}`, {
     headers: {
       Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
     },
@@ -49,7 +44,7 @@ export async function OrgDashboard({
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="sm">
             <PlusIcon className="w-4 h-4 mr-2" />
-            <Link href={`https://github.com/${orgGithub}`}>Visit Github </Link>
+            <Link href={`${GITHUB_BASE_URL}${orgGithub}`}>Visit Github</Link>
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
