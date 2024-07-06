@@ -1,30 +1,22 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { deleteOrg } from "@/actions/deleteOrg";
 
-type Props = {};
+type OrgTableProps = {
+  orgId: number;
+  orgName: string;
+  orgGithub: string;
+  orgDescription: string;
+};
 
 const OrgTable = ({
   orgId,
   orgName,
   orgGithub,
   orgDescription,
-}: {
-  orgId: number;
-  orgName: string;
-  orgGithub: string;
-  orgDescription: string;
-}) => {
+}: OrgTableProps) => {
   return (
     <TableBody>
       <TableRow className=" ">
@@ -38,12 +30,15 @@ const OrgTable = ({
         <TableCell>
           <form action={deleteOrg}>
             <input type="text" name="orgId" value={orgId} hidden />
-          <Button type="submit" variant="outline" className="hover:bg-orange-600">
-            Remove Org
-          </Button>
+            <Button
+              type="submit"
+              variant="outline"
+              className="hover:bg-orange-600"
+            >
+              Remove Org
+            </Button>
           </form>
         </TableCell>
-        {/* <TableCell className="text-right">$250.00</TableCell> */}
       </TableRow>
     </TableBody>
   );

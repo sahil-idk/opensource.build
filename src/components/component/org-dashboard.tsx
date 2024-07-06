@@ -1,33 +1,49 @@
-import React from "react"
-import { Button } from "@/components/ui/button"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuItem,
+  DropdownMenuCheckboxItem,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
-import Link from "next/link"
-import Image from "next/image"
-import ReposList from "./reposList"
+import Link from "next/link";
+import Image from "next/image";
+import ReposList from "./reposList";
 
-export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
-  orgName: string,
-  orgGithub: string,
-  orgDescription: string
+type OrgDashboardProps = {
+  orgName: string;
+  orgGithub: string;
+  orgDescription: string;
+};
 
-}) {
-
-  const orgInfo = await fetch(`https://api.github.com/orgs/${orgGithub}`,
-  {
+export async function OrgDashboard({
+  orgName,
+  orgGithub,
+  orgDescription,
+}: OrgDashboardProps) {
+  const orgInfo = await fetch(`https://api.github.com/orgs/${orgGithub}`, {
     headers: {
-      'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-    }
-  }
-  );
+      Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+    },
+  });
   const orgData = await orgInfo.json();
-  console.log(orgData)
+  console.log(orgData);
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-primary text-primary-foreground py-4 px-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Image src={orgData.avatar_url} alt="Organization Logo" width={40} height={40} className="rounded-full" />
+          <Image
+            src={orgData.avatar_url}
+            alt="Organization Logo"
+            width={40}
+            height={40}
+            className="rounded-full"
+          />
           <h1 className="text-2xl font-bold">{orgName}</h1>
         </div>
         <div className="flex items-center gap-4">
@@ -37,7 +53,11 @@ export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm" className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-2"
+              >
                 <SettingsIcon className="w-4 h-4" />
                 <span className="sr-only">Settings</span>
               </Button>
@@ -57,15 +77,27 @@ export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
-              <div className="bg-background rounded-full px-3 py-1 text-sm font-medium">Total Repositories: {orgData.public_repos}</div>
+              <div className="bg-background rounded-full px-3 py-1 text-sm font-medium">
+                Total Repositories: {orgData.public_repos}
+              </div>
               {/* <div className="bg-background rounded-full px-3 py-1 text-sm font-medium">Total Contributors: 125</div> */}
-              <div className="bg-background rounded-full px-3 py-1 text-sm font-medium">Total Followers: {orgData.followers}</div>
+              <div className="bg-background rounded-full px-3 py-1 text-sm font-medium">
+                Total Followers: {orgData.followers}
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <Input type="search" placeholder="Search repositories..." className="bg-background" />
+              <Input
+                type="search"
+                placeholder="Search repositories..."
+                className="bg-background"
+              />
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2"
+                  >
                     <FilterIcon className="w-4 h-4" />
                     <span>Filter</span>
                   </Button>
@@ -73,14 +105,22 @@ export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Filter by</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem checked>Language</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem checked>
+                    Language
+                  </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem>Stars</DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>Last Updated</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>
+                    Last Updated
+                  </DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2"
+                  >
                     <ListOrderedIcon className="w-4 h-4" />
                     <span>Sort</span>
                   </Button>
@@ -88,15 +128,19 @@ export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Sort by</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuCheckboxItem checked>Name</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem checked>
+                    Name
+                  </DropdownMenuCheckboxItem>
                   <DropdownMenuCheckboxItem>Stars</DropdownMenuCheckboxItem>
-                  <DropdownMenuCheckboxItem>Last Updated</DropdownMenuCheckboxItem>
+                  <DropdownMenuCheckboxItem>
+                    Last Updated
+                  </DropdownMenuCheckboxItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
-          <div >
-            <ReposList orgGithub={orgGithub}/>
+          <div>
+            <ReposList orgGithub={orgGithub} />
             {/* <Card>
               <CardHeader className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -293,10 +337,12 @@ export async  function OrgDashboard({orgName, orgGithub, orgDescription}:{
         </div>
       </main>
     </div>
-  )
+  );
 }
 
-function BookOpenIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function BookOpenIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -313,11 +359,12 @@ function BookOpenIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGS
       <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
       <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
     </svg>
-  )
+  );
 }
 
-
-function CodeIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function CodeIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -334,11 +381,12 @@ function CodeIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGEl
       <polyline points="16 18 22 12 16 6" />
       <polyline points="8 6 2 12 8 18" />
     </svg>
-  )
+  );
 }
 
-
-function CpuIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function CpuIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -363,11 +411,12 @@ function CpuIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGEle
       <path d="M9 2v2" />
       <path d="M9 20v2" />
     </svg>
-  )
+  );
 }
 
-
-function DatabaseIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function DatabaseIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -385,11 +434,12 @@ function DatabaseIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGS
       <path d="M3 5V19A9 3 0 0 0 21 19V5" />
       <path d="M3 12A9 3 0 0 0 21 12" />
     </svg>
-  )
+  );
 }
 
-
-function FilterIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function FilterIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -405,11 +455,12 @@ function FilterIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVG
     >
       <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
     </svg>
-  )
+  );
 }
 
-
-function GithubIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function GithubIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -426,11 +477,12 @@ function GithubIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVG
       <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
       <path d="M9 18c-4.51 2-5-2-7-2" />
     </svg>
-  )
+  );
 }
 
-
-function LayersIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function LayersIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -448,11 +500,12 @@ function LayersIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVG
       <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
       <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
     </svg>
-  )
+  );
 }
 
-
-function LayoutPanelLeftIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function LayoutPanelLeftIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -470,11 +523,12 @@ function LayoutPanelLeftIcon(props: React.JSX.IntrinsicAttributes & React.SVGPro
       <rect width="7" height="7" x="14" y="3" rx="1" />
       <rect width="7" height="7" x="14" y="14" rx="1" />
     </svg>
-  )
+  );
 }
 
-
-function ListOrderedIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function ListOrderedIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -495,11 +549,12 @@ function ListOrderedIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<S
       <path d="M4 10h2" />
       <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1" />
     </svg>
-  )
+  );
 }
 
-
-function PlusIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function PlusIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -516,11 +571,12 @@ function PlusIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGEl
       <path d="M5 12h14" />
       <path d="M12 5v14" />
     </svg>
-  )
+  );
 }
 
-
-function SettingsIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function SettingsIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -537,11 +593,12 @@ function SettingsIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGS
       <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
       <circle cx="12" cy="12" r="3" />
     </svg>
-  )
+  );
 }
 
-
-function StarIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>) {
+function StarIcon(
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) {
   return (
     <svg
       {...props}
@@ -557,5 +614,5 @@ function StarIcon(props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGEl
     >
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
-  )
+  );
 }
