@@ -37,7 +37,7 @@ const IssueList = async ({
       },
     }
   ).then((response) => response.json());
-
+  console.log(issueData,"issueData");
   return (
     <TabsContent value="issues">
       <Card className="w-full">
@@ -153,3 +153,4 @@ const IssueList = async ({
 };
 
 export default IssueList;
+ 

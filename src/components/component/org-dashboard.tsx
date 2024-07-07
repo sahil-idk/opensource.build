@@ -21,7 +21,7 @@ type OrgDashboardProps = {
 };
 
 export async function OrgDashboard({ orgName, orgGithub }: OrgDashboardProps) {
-  const orgInfo = await fetch(`${GITHUB_API_BASE_URL}orgs/${orgGithub}`, {
+  const orgInfo = await fetch(`https://api.github.com/orgs/${orgGithub}`, {
     headers: {
       Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
     },

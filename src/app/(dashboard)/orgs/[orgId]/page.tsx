@@ -12,10 +12,7 @@ const OrgPage = async ({
   };
 }) => {
   const orgId = Number(params.orgId);
-  const orgDetails = await db
-    .select()
-    .from(orgsTable)
-    .where(eq(orgsTable.id, orgId));
+  const orgDetails = await db.select().from(orgsTable).where(eq(orgsTable.id, orgId));
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

@@ -8,7 +8,7 @@ import { GITHUB_API_BASE_URL } from "@/lib/env";
 const ReposList = async ({ orgGithub }: { orgGithub: string }) => {
   console.log(orgGithub, "orgGithub");
   const repos = await fetch(
-    `${GITHUB_API_BASE_URL}orgs/${orgGithub}/repos?per_page=5`,
+    `https://api.github.com/orgs/${orgGithub}/repos?per_page=5 `,
     {
       headers: {
         Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,

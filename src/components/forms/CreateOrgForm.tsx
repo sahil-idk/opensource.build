@@ -56,7 +56,7 @@ const CreateOrgForm = () => {
       setError("");
       try {
         const response = await fetch(
-          `${GITHUB_API_BASE_URL}/orgs/${sanitizedQuery}`,
+          `${GITHUB_API_BASE_URL}orgs/${sanitizedQuery}`,
           {
             headers: {
               Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
