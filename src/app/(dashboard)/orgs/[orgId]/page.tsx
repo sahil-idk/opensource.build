@@ -22,7 +22,7 @@ const OrgPage = async ({
       <OrgDashboard
         orgName={orgDetails[0].title}
         orgGithub={orgDetails[0].link}
-        orgDescription={orgDetails[0].content}
+        
       />
     </Suspense>
   );
