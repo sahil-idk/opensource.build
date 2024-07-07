@@ -35,6 +35,7 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  TableFooter,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -223,7 +224,7 @@ export async function UserDashboard({ user }: { user: any }) {
                     </TableHeader>
                     <TableBody>
                       {issuesTodo &&
-                        issuesTodo.map((todo) => {
+                        issuesTodo.slice(0,5).map((todo) => {
                           return (
                             <TableRow className="bg-accent" key={todo.id}>
                               <TableCell>
@@ -255,7 +256,11 @@ export async function UserDashboard({ user }: { user: any }) {
                           );
                         })}
                     </TableBody>
+                   
                   </Table>
+                  <div className="text-right text-slate-400 my-2">
+                    <Link className={buttonVariants()} href="/dashboard/issues">View More</Link>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

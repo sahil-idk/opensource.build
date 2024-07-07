@@ -27,7 +27,7 @@ export async function UserRepos() {
         userRepos.map(
           (repo: {
             id: number;
-            url: string;
+            html_url: string;
             name: string;
             stargazers_count: number;
             description: string;
@@ -53,7 +53,7 @@ export async function UserRepos() {
                   <p className="text-muted-foreground h-32">
                     {repo.description}
                   </p>
-                  <Link href={repo.url} className="hover:text-orange-600">
+                  <Link href={repo.html_url} className="hover:text-orange-600">
                     View Source code
                   </Link>
                   <div className="flex items-center gap-4 mt-4  text-sm">
