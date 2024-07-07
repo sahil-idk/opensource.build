@@ -7,12 +7,13 @@ import {
 } from "../icons/Icons";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
+import { GITHUB_API_BASE_URL } from "@/lib/env";
 
 export async function UserRepos() {
   const user = await currentUser();
   console.log(user?.username);
   const userRepos = await fetch(
-    `https://api.github.com/users/${user?.username}/repos?per_page=6&page=1&sort=updated`,
+    `${GITHUB_API_BASE_URL}users/${user?.username}/repos?per_page=6&page=1&sort=updated`,
     {
       headers: {
         Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,

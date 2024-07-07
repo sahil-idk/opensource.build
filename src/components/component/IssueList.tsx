@@ -20,6 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "../ui/button";
 import { addToWorkspace } from "@/actions/addToWorkspace";
 import Image from "next/image";
+import { GITHUB_API_BASE_URL } from "@/lib/env";
 
 const IssueList = async ({
   orgName,
@@ -29,7 +30,7 @@ const IssueList = async ({
   repoName: string;
 }) => {
   const issueData = await fetch(
-    `https://api.github.com/repos/${orgName}/${repoName}/issues?page=1&&per_page=5`,
+    `${GITHUB_API_BASE_URL}repos/${orgName}/${repoName}/issues?page=1&&per_page=5`,
     {
       headers: {
         Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
