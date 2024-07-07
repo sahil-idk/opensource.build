@@ -2,6 +2,7 @@ import Link from "next/link";
 import { JSX, SVGProps } from "react";
 import { GithubIcon } from "../icons/Icons";
 import { HoverBorderGradient } from "../ui/hover-border-gradient";
+import { GITHUB_REPO_URL } from "@/lib/env";
 
 export default function Navbar() {
   return (
@@ -13,7 +14,7 @@ export default function Navbar() {
       </Link>
 
       <div className="ml-auto flex gap-6 items-center">
-        <Link href={"https://github.com/sahil-idk/opensource.build"}>
+        <Link href={GITHUB_REPO_URL}>
           <HoverBorderGradient
             containerClassName="rounded-full"
             as="button"

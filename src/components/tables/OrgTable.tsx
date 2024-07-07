@@ -3,6 +3,7 @@ import { TableBody, TableCell, TableRow } from "@/components/ui/table";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { deleteOrg } from "@/actions/deleteOrg";
+import { GITHUB_BASE_URL } from "@/lib/env";
 
 type OrgTableProps = {
   orgId: number;
@@ -24,7 +25,7 @@ const OrgTable = ({
           <Link href={`/orgs/${orgId}`}>{orgName}</Link>
         </TableCell>
         <TableCell>
-          <Link href={`https://github.com/${orgGithub}`}>{orgGithub}</Link>
+          <Link href={`${GITHUB_BASE_URL}${orgGithub}`}>{orgGithub}</Link>
         </TableCell>
         <TableCell>{orgDescription}</TableCell>
         <TableCell>
