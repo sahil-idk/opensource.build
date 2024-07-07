@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useMemo, useEffect, SetStateAction } from "react";
@@ -33,6 +32,9 @@ import { fetchIssues } from "@/actions/fetchIssues";
 import { useAuth } from "@clerk/nextjs";
 import { GithubIcon } from "../icons/Icons";
 import Link from "next/link";
+import { deleteIssue } from "@/actions/deleteFromWorkspace";
+import { useRouter } from "next/navigation";
+import { FilterIcon } from "lucide-react";
 
 interface Issue {
   number: string | null;
@@ -51,32 +53,36 @@ export function IssuePage() {
     organization: [],
   });
   const [issues, setIssues] = useState<Issue[]>([]);
-  const {userId}= useAuth();
+  const { userId } = useAuth();
   useEffect(() => {
     async function loadIssues() {
       setLoading(true);
       const fetchedIssues = await fetchIssues(userId!);
-      console.log(fetchedIssues);
+      // console.log(fetchedIssues);
       setIssues(fetchedIssues);
       setLoading(false);
     }
     loadIssues();
   }, []);
-  
- 
+
   const filteredIssues = useMemo(() => {
     const searchValue = search.toLowerCase();
-    return issues.filter((issue) => {
-      return (
-        issue.number!.toLowerCase().includes(searchValue) ||
-        issue.title!.toLowerCase().includes(searchValue) ||
-        issue.state!.toLowerCase().includes(searchValue) 
-    
-      );
-    });
-  }, [search, issues]);
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value);
+    return issues
+      .filter((issue) => {
+        return (
+          issue.number!.toLowerCase().includes(searchValue) ||
+          issue.title!.toLowerCase().includes(searchValue) ||
+          issue.state!.toLowerCase().includes(searchValue)
+        );
+      })
+      .filter((issue) => {
+        // Check if the issue state is included in the filter status
+        return filter.status.includes(issue.state!);
+      });
+  }, [search, issues, filter.status]);
+  const router = useRouter();
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setSearch(e.target.value);
   const handleSort = (key: string) => {
     if (sort.key === key) {
       setSort({ key, order: sort.order === "asc" ? "desc" : "asc" });
@@ -104,9 +110,16 @@ export function IssuePage() {
   //   () => Array.from(new Set(issues.map((issue) => issue.organization))),
   //   [issues]
   // );
+  const handleDelete = async (issueId: string) => {
+    await deleteIssue(issueId); // Call the server action to delete the issue
+    // Update the state to remove the deleted issue
+    setIssues((prevIssues) =>
+      prevIssues.filter((issue) => issue.id !== issueId)
+    );
+  };
   return (
     <div className="flex h-full w-full flex-col bg-muted/40 p-5">
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 sm:pb-5">
         <div className="relative flex-1">
           <div className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -119,11 +132,13 @@ export function IssuePage() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" size="sm" className="h-8 gap-1">
-              <div className="h-3.5 w-3.5" />
-              <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                Filter
-              </span>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <FilterIcon className="w-4 h-4" />
+              <span>Filter</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -160,51 +175,51 @@ export function IssuePage() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Button size="sm" className="shrink-0">
-          <div className="h-4 w-4 mr-2" />
           New Issue
         </Button>
       </header>
       <div className="flex flex-1 gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 w-[85rem]">
         <div className="flex-1 overflow-auto">
           {loading ? (
-        <div>Loading...</div>
-      ) : (<Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead
-                  className="cursor-pointer"
-                  onClick={() => handleSort("id")}
-                >
-                  Issue ID
-                  {sort.key === "id" && (
-                    <span className="ml-1">
-                      {sort.order === "asc" ? "\u2191" : "\u2193"}
-                    </span>
-                  )}
-                </TableHead>
-                <TableHead
-                  className="cursor-pointer"
-                  onClick={() => handleSort("name")}
-                >
-                  Name
-                  {sort.key === "name" && (
-                    <span className="ml-1">
-                      {sort.order === "asc" ? "\u2191" : "\u2193"}
-                    </span>
-                  )}
-                </TableHead>
-                <TableHead
-                  className="cursor-pointer"
-                  onClick={() => handleSort("status")}
-                >
-                  Status
-                  {sort.key === "status" && (
-                    <span className="ml-1">
-                      {sort.order === "asc" ? "\u2191" : "\u2193"}
-                    </span>
-                  )}
-                </TableHead>
-                {/* <TableHead
+            <div>Loading...</div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead
+                    className="cursor-pointer"
+                    onClick={() => handleSort("id")}
+                  >
+                    Issue ID
+                    {sort.key === "id" && (
+                      <span className="ml-1">
+                        {sort.order === "asc" ? "\u2191" : "\u2193"}
+                      </span>
+                    )}
+                  </TableHead>
+                  <TableHead
+                    className="cursor-pointer"
+                    onClick={() => handleSort("name")}
+                  >
+                    Name
+                    {sort.key === "name" && (
+                      <span className="ml-1">
+                        {sort.order === "asc" ? "\u2191" : "\u2193"}
+                      </span>
+                    )}
+                  </TableHead>
+                  <TableHead
+                    className="cursor-pointer"
+                    onClick={() => handleSort("status")}
+                  >
+                    Status
+                    {sort.key === "status" && (
+                      <span className="ml-1">
+                        {sort.order === "asc" ? "\u2191" : "\u2193"}
+                      </span>
+                    )}
+                  </TableHead>
+                  {/* <TableHead
                   className="cursor-pointer"
                   onClick={() => handleSort("organization")}
                 >
@@ -215,29 +230,29 @@ export function IssuePage() {
                     </span>
                   )}
                 </TableHead> */}
-                <TableHead
-                  className="cursor-pointer"
-                  onClick={() => handleSort("priority")}
-                >
-                  Github
-                  {sort.key === "priority" && (
-                    <span className="ml-1">
-                      {sort.order === "asc" ? "\u2191" : "\u2193"}
-                    </span>
-                  )}
-                </TableHead>
-                {/* <TableHead
-                  className="cursor-pointer"
-                  onClick={() => handleSort("assignee")}
-                >
-                  Assignee
-                  {sort.key === "assignee" && (
-                    <span className="ml-1">
-                      {sort.order === "asc" ? "\u2191" : "\u2193"}
-                    </span>
-                  )}
-                </TableHead> */}
-                {/* <TableHead
+                  <TableHead
+                    className="cursor-pointer"
+                    onClick={() => handleSort("priority")}
+                  >
+                    Github
+                    {sort.key === "priority" && (
+                      <span className="ml-1">
+                        {sort.order === "asc" ? "\u2191" : "\u2193"}
+                      </span>
+                    )}
+                  </TableHead>
+                  <TableHead
+                    className="cursor-pointer"
+                    onClick={() => handleSort("assignee")}
+                  >
+                    Action
+                    {sort.key === "assignee" && (
+                      <span className="ml-1">
+                        {sort.order === "asc" ? "\u2191" : "\u2193"}
+                      </span>
+                    )}
+                  </TableHead>
+                  {/* <TableHead
                   className="cursor-pointer"
                   onClick={() => handleSort("created")}
                 >
@@ -259,33 +274,59 @@ export function IssuePage() {
                     </span>
                   )}
                 </TableHead> */}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredIssues.map((issue) => (
-                <TableRow key={issue.id}>
-                  <TableCell className="font-medium">{issue.number}</TableCell>
-                  <TableCell>{issue.title}</TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={
-                        issue.state === "open"
-                          ? "secondary"
-                          : issue.state === "in progress"
-                          ? "outline"
-                          : "default"
-                      }
-                    >
-                      {issue.state}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Link href={issue.issueLink!} className="hover:text-orange-600">
-                   
-                    <GithubIcon className="w-5 h-5"/>
-                    </Link>
-                  </TableCell>
-                  {/* <TableCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredIssues.map((issue) => (
+                  <TableRow key={issue.id}>
+                    <TableCell className="font-medium">
+                      {issue.number}
+                    </TableCell>
+                    <TableCell>{issue.title}</TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={
+                          issue.state === "open"
+                            ? "secondary"
+                            : issue.state === "in progress"
+                            ? "outline"
+                            : "default"
+                        }
+                      >
+                        {issue.state}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Link
+                        href={issue.issueLink!}
+                        className="hover:text-orange-600"
+                      >
+                        <GithubIcon className="w-5 h-5" />
+                      </Link>
+                    </TableCell>
+                    <TableCell>
+                      <form
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          handleDelete(issue.id);
+                        }}
+                      >
+                        <input
+                          type="text"
+                          name="issueId"
+                          value={issue.id}
+                          hidden
+                        />
+                        <Button
+                          type="submit"
+                          variant="outline"
+                          className="hover:bg-orange-600"
+                        >
+                          Remove Org
+                        </Button>
+                      </form>
+                    </TableCell>
+                    {/* <TableCell>
                     <Badge
                       variant={
                         issue.priority === "high"
@@ -298,7 +339,7 @@ export function IssuePage() {
                       {issue.priority}
                     </Badge>
                   </TableCell> */}
-                  {/* <TableCell>{issue.assignee}</TableCell>
+                    {/* <TableCell>{issue.assignee}</TableCell>
                   <TableCell>
                     <time dateTime={issue.created}>
                       {new Date(issue.created).toLocaleDateString()}
@@ -309,13 +350,11 @@ export function IssuePage() {
                       {new Date(issue.updated).toLocaleDateString()}
                     </time>
                   </TableCell> */}
-                </TableRow> 
-               
-              )) 
-              }
-
-            </TableBody>
-          </Table>)}
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </div>
         <div className="hidden w-64 flex-col gap-4 lg:flex">
           <Card>
