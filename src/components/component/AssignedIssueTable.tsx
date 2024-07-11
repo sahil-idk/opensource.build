@@ -20,8 +20,11 @@ if(!user){
           },
     }).then((response) => response.json());
     
+    if(issueData.items.length === 0){
+        return <div> No issues assigned to you</div>
+    }
     
-    console.log(issueData.items[0].labels,"issueData");
+    // console.log(issueData.items[0].labels,"issueData");
   return (
     <div className="w-full">
       <p className="text-lg text-slate-400">Hi {user?.username} , you  have {issueData.total_count} issues assigned to you</p> 
