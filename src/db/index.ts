@@ -5,3 +5,4 @@ import { config } from 'dotenv';
 config({ path: '.env.local' });
 
 export const db = drizzle(sql);
+    

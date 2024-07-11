@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableHeader,
@@ -364,21 +364,10 @@ export function IssuePage() {
                 View the issues assigned to you at a glance.
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="grid gap-2">
-                <div className="flex items-center justify-between">
-                  <div>Open</div>
-                  <Badge variant="secondary">3</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>In Progress</div>
-                  <Badge variant="outline">2</Badge>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div>Closed</div>
-                  <Badge variant="default">1</Badge>
-                </div>
-              </div>
+            <CardContent className="w-full">
+             <Link href={'/dashboard/issues/assigned'} className={buttonVariants()}>
+              View Assigned Issues
+             </Link>
             </CardContent>
           </Card>
           <Card>

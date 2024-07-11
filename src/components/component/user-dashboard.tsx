@@ -44,7 +44,7 @@ import { issuesTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { FileIcon, ListFilterIcon, SearchIcon } from "../icons/Icons";
-
+import { SignOutButton } from "@clerk/nextjs";
 export async function UserDashboard({ user }: { user: any }) {
   const issuesTodo = await db
     .select()
@@ -106,7 +106,9 @@ export async function UserDashboard({ user }: { user: any }) {
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem>
+              <SignOutButton/>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

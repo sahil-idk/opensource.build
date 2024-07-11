@@ -6,9 +6,17 @@ import Link from "next/link";
 import { GITHUB_API_BASE_URL } from "@/lib/env";
 
 const ReposList = async ({ orgGithub }: { orgGithub: string }) => {
+  function daysAgo(dateString: string): string {
+    const date = new Date(dateString).getTime(); // Convert to milliseconds
+    const now = new Date().getTime(); // Convert to milliseconds
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return `${diffDays} days ago`;
+}
+
   console.log(orgGithub, "orgGithub");
   const repos = await fetch(
-    `https://api.github.com/orgs/${orgGithub}/repos?per_page=5 `,
+    `https://api.github.com/orgs/${orgGithub}/repos?per_page=8 `,
     {
       headers: {
         Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
@@ -23,7 +31,7 @@ const ReposList = async ({ orgGithub }: { orgGithub: string }) => {
         reposList.map((repo: any) => {
           return (
             <Link href={`/orgs/${orgGithub}/${repo.name}`} key={repo.id}>
-              <Card>
+              <Card className="h-56">
                 <CardHeader className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <BookOpenIcon className="w-6 h-6" />
@@ -52,7 +60,7 @@ const ReposList = async ({ orgGithub }: { orgGithub: string }) => {
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <GithubIcon className="w-4 h-4" />
-                      <span>{repo.updated_at} days ago</span>
+                      <span>{daysAgo(repo.updated_at)}</span>
                     </div>
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <StarIcon className="w-4 h-4" />

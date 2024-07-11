@@ -9,9 +9,9 @@ export default clerkMiddleware(
 
 export const config = {
   matcher: [
-    "/((?!.*\\..*|_next).*)", // Matches all except files with dots and _next
-    "/",
-    "/(api|trpc)(.*)",
-    "/orgs/:path*", // Ensure orgs path is included
+    '/((?!.*\\..*|_next).*)', // Matches all except files with dots and _next
+    '/', 
+    '/(api|trpc)(.*)',
+    '/orgs/:path*' // Ensure orgs path is included
   ],
 };
