@@ -11,17 +11,18 @@ type Props = {}
 
 const AssignedIssueTable = async (props: Props) => {
     const user = await currentUser();
+    // console.log(user?.externalAccounts[0].username,"user");
 if(!user){
     return <div>user cant be found </div>
 }
-    const issueData = await fetch(`https://api.github.com/search/issues?q=assignee:${user?.username!}`,{
+    const issueData = await fetch(`https://api.github.com/search/issues?q=assignee:${user?.externalAccounts[0].username!}`,{
         headers: {
             Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
           },
     }).then((response) => response.json());
     
     if(issueData.items.length === 0){
-        return <div> No issues assigned to you</div>
+        return <div> No issues assigned to you / sign in thru github after you signout </div>
     }
     
     // console.log(issueData.items[0].labels,"issueData");
