@@ -322,7 +322,7 @@ export function IssuePage() {
                           variant="outline"
                           className="hover:bg-orange-600"
                         >
-                          Remove Org
+                          Delete
                         </Button>
                       </form>
                     </TableCell>
