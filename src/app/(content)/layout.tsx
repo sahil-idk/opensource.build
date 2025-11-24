@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   description: "The ultimate showdown for open-source devs! Track issues, compete on leaderboards, and show off your contributions.",
 };
 
+// Force dynamic rendering for auth checks
+export const dynamic = 'force-dynamic';
+
 export default async function RootLayout({
   children,
 }: Readonly<{

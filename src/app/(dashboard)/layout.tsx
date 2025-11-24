@@ -8,6 +8,9 @@ export const metadata = {
   description: "Track your open source contributions and compete on the leaderboard",
 };
 
+// Force dynamic rendering for auth checks
+export const dynamic = 'force-dynamic';
+
 export default async function RootLayout({
   children,
 }: {

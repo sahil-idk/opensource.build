@@ -4,6 +4,8 @@ import { usersTable } from '@/db/schema';
 import { verifyAccessToken } from '@/lib/auth';
 import { eq } from 'drizzle-orm';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization');
