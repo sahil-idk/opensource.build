@@ -236,9 +236,9 @@ export function checkRateLimit(
  */
 setInterval(() => {
   const now = Date.now();
-  for (const [key, entry] of rateLimitStore.entries()) {
+  Array.from(rateLimitStore.entries()).forEach(([key, entry]) => {
     if (entry.resetAt < now) {
       rateLimitStore.delete(key);
     }
-  }
+  });
 }, 60 * 1000); // Clean up every minute
