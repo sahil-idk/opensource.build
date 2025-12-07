@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 import { db } from '@/db';
 import { usersTable, sessionsTable } from '@/db/schema';
 import { verifyAccessToken } from './auth';
@@ -99,13 +100,13 @@ export async function getCurrentUserFromSession(): Promise<AuthUser | null> {
 
 /**
  * Require authentication for server components
- * Throws error if user is not authenticated
+ * Redirects to login if user is not authenticated
  */
 export async function requireAuth(): Promise<AuthUser> {
   const user = await getCurrentUserFromSession();
 
   if (!user) {
-    throw new Error('Unauthorized');
+    redirect('/login');
   }
 
   return user;
