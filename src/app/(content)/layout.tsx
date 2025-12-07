@@ -1,39 +1,42 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { ThemeProvider } from "@/components/component/theme-provider";
+import { AuthProvider } from "@/components/providers/auth-provider";
+import { getCurrentUserFromSession } from "@/lib/auth-middleware";
 
 export const metadata: Metadata = {
-  title: "Codeforces.build",
-  description: "Codeforces for Open source devs",
+  title: "opensource.build - Codeforces for Open Source",
+  description: "The ultimate showdown for open-source devs! Track issues, compete on leaderboards, and show off your contributions.",
 };
+
+// Force dynamic rendering for auth checks
+export const dynamic = 'force-dynamic';
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await currentUser();
+  const user = await getCurrentUserFromSession();
   if (user) {
     redirect(`/dashboard`);
   }
 
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+    <html lang="en">
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
             <main>{children}</main>
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
