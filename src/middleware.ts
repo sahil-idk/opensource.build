@@ -12,6 +12,7 @@ const publicRoutes = [
   '/api/auth/refresh',
   '/api/auth/reset-password',
   '/api/auth/verify-email',
+  '/api/github/search-orgs',
 ];
 
 // Routes that should redirect to dashboard if already authenticated
