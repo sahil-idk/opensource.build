@@ -160,3 +160,17 @@ Check the logs in Vercel:
 - Look for errors in `/api/auth/register`
 
 The most common issue is missing `JWT_SECRET` or database tables not created.
+
+---
+
+## Quick Checklist
+
+✅ Database tables created (run migration in Neon)
+✅ Environment variables added to Vercel:
+   - `JWT_SECRET`
+   - `NEXTAUTH_SECRET`
+   - `NEXTAUTH_URL`
+   - `NEXT_PUBLIC_GITHUB_TOKEN`
+   - All `POSTGRES_*` variables
+✅ Redeployed after adding env vars
+✅ Tested registration at `/register`
