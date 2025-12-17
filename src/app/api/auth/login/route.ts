@@ -61,16 +61,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if email is verified
-    if (!user.emailVerified) {
-      return NextResponse.json(
-        {
-          error: 'Email not verified',
-          message: 'Please verify your email before logging in',
-        },
-        { status: 403 }
-      );
-    }
+    // TODO: Re-enable email verification once SMTP is configured
+    // For now, allow login without email verification for development
+    // if (!user.emailVerified) {
+    //   return NextResponse.json(
+    //     {
+    //       error: 'Email not verified',
+    //       message: 'Please verify your email before logging in',
+    //     },
+    //     { status: 403 }
+    //   );
+    // }
 
     // Generate tokens
     const accessToken = generateAccessToken(user.id, user.email);
